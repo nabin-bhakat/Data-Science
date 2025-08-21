@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Flask APP {% endblock %}
+{% block content %}
+    <form method="POST" action="{{url_for('index')}}"> 
+        <input name="username" type="text" placeholder="Username">
+        <br>
+        <input name="password" type="password" placeholder="Password">
+        <br>
+        <input type="submit" value="Login"> 
+    </form>
+
+    <form method="POST" action="{{url_for('uploadFile')}}" enctype="multipart/form-data">
+        <input name="file" type="file" placeholder="UploadFile" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, text/plain, text/csv">
+        <input type="submit" value="Upload">
+    </form>
+{% endblock %}

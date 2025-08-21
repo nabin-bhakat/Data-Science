@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+{% block style %}
+<style>
+    div{
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="uploads">Choose EXCEL files to upload</label>
+            <input type="file" name="uploads" accept=".csv,.xls">
+            <input type="submit">
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %} Index {% endblock %}
+
+{% block style %}
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .task { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .task-completed p { text-decoration: line-through; color: #888; }
+        .task form { display: inline; margin-left: 10px; }
+    </style>
+{% endblock %}
+
+{%block content%}
+    <h1>My Todo List</h1>
+    <h2>Tasks</h2>
+    {% if tasks %}
+    <div>
+        {% for task in tasks %}
+        <div class="task {{'task-completed' if task.status=='completed' else ''}}">
+            <p style="display:inline-block; width: 60%;">
+                <input type="text" name="description" placeholder="{{task.description}}" disabled>
+                (Priority:
+                <input type="number" name="priority" placeholder="{{task.priority}}" disabled >
+                )
+            </p>
+            {% if task.status == "Pending" %}
+            <form action="{{url_for('edit', task_id=task['_id'])}}" method="post">
+                <button type="submit">Edit Task</button>
+            </form>
+            <form action="{{url_for('complete', task_id=task['_id'])}}" method="post">
+                <button type="submit">Mark as Completed</button>
+            </form>
+            {% endif %}
+            <form action="{{url_for('delete',task_id=task['_id'])}}" method="post">
+                <button type="submit">Delete task</button>
+            </form>
+        </div>
+        {% endfor %}
+        {%else%}
+            <p>No task yet. Add one below</p>
+    </div>
+    {% endif %}
+    <hr>
+    <h2>Add a New Task</h2>
+    <form action="/add" method="post">
+        <input type="text" name="description" required>
+        <input type="number" name="priority" placeholder="Priority(1-5)" required>
+        <button type="submit">Add task</button>
+    </form>
+{% endblock %}
